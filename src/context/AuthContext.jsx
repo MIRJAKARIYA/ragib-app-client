@@ -24,7 +24,7 @@ export default function AuthProvider({ children }) {
   const syncUserToBackend = async (firebaseUser) => {
     try {
       const token = await firebaseUser.getIdToken();
-      const res = await axios.get("/api/users/me", {
+      const res = await axios.get("http://localhost:5000/api/users/me", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUser({ ...firebaseUser, ...res.data, token });

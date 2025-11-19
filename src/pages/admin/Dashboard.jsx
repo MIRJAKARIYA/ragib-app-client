@@ -11,7 +11,7 @@ const Dashboard = () => {
     queryKey: ["admin-stats"],
     queryFn: async () => {
       const token = await user.getIdToken();
-      const res = await axios.get("/api/admin/stats", {
+      const res = await axios.get("http://localhost:5000/api/admin/stats", {
         headers: { Authorization: `Bearer ${token}` },
       });
       return res.data;

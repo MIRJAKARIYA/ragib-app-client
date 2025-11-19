@@ -11,7 +11,7 @@ export default function Profile() {
     queryKey: ["my-orders"],
     queryFn: async () => {
       const token = await user.getIdToken();
-      const res = await axios.get("/api/orders/myorders", {
+      const res = await axios.get("http://localhost:5000/api/orders/myorders", {
         headers: { Authorization: `Bearer ${token}` }
       });
       return res.data;

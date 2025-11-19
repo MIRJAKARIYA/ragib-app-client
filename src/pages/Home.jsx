@@ -5,23 +5,25 @@ import ProductSkeleton from "../components/ProductSkeleton";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useInView } from "react-intersection-observer";
-
+import Sidebar from "../components/Sidebar";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
 export default function Home() {
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("newest");
   const search = new URLSearchParams(location.search).get("search") || "";
-
+console.log(category)
   const {
     data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-    isError
+
   } = useInfiniteQuery({
     queryKey: ['products', { category, sort, search }],
     queryFn: async ({ pageParam = 1 }) => {
-      const res = await axios.get(`/api/products?page=${pageParam}&category=${category}&sort=${sort}&search=${search}`);
+      const res = await axios.get(`http://localhost:5000/api/products?page=${pageParam}&category=${category}&sort=${sort}&search=${search}`);
       return res.data;
     },
     getNextPageParam: (lastPage) => lastPage.hasMore ? lastPage.page + 1 : undefined,
@@ -39,7 +41,7 @@ export default function Home() {
     <div className="max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6 px-4">
       {/* Sidebar */}
       <aside className="hidden lg:block">
-        <Sidebar active={category} onChange={setCategory} />
+        <Sidebar active={category} setCategory={setCategory} />
       </aside>
 
       {/* Main */}
